@@ -5,7 +5,7 @@ find_package( Qt4 REQUIRED )
 include( ${QT_USE_FILE} )
 
 add_definitions( ${QT_DEFINITIONS} )
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pipe -Wall -Wextra" )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pipe -std=c++11 -Wall -Wextra -Wconversion" )
 
 add_executable( text2png main.cc )
 target_link_libraries( text2png ${QT_LIBRARIES} )

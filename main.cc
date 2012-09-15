@@ -10,7 +10,8 @@
 #include <QPainter>
 #include <QImage>
 
-#include <cstdio>
+#include <iostream>
+#include <cstdlib>
 #include <cstring>
 
 const int WIDTH     = 1024;
@@ -21,6 +22,16 @@ int main( int argc, char** argv )
 {
   QApplication app( argc, argv );
   QTextCodec::setCodecForCStrings( QTextCodec::codecForName( "UTF-8" ) );
+
+  for( const QString s : app.arguments() ) {
+    if( s.indexOf( "-" ) != 0 || s == "-?" || s == "-h" || s == "--help" ) {
+      std::cout << "Usage: " << app.argv()[0] << std::endl
+                << "  Input text is read from stdin and written to `out.png'." << std::endl
+                << "  Colours are given as hexadecimal values (like in HTML/CSS)." << std::endl;
+
+      return EXIT_FAILURE;
+    }
+  }
 
   QPixmap  pixmap( WIDTH, HEIGHT );
   QFont    font( "LucidaTypewriter" );
@@ -34,8 +45,8 @@ int main( int argc, char** argv )
   painter.setFont( font );
 
   char line[128];
-  while( fgets( line, 128, stdin ) ) {
-    int len = strlen( line );
+  while( fgets( line, 128, stdin ) != 0 ) {
+    size_t len = strlen( line );
 
     if( len > 0 && line[len - 1] == '\n' ) {
       line[len - 1] = '\0';
@@ -65,5 +76,6 @@ int main( int argc, char** argv )
   croppedPixmap.fill( Qt::black );
   croppedPainter.drawPixmap( 10, 0, pixmap, 0, 0, maxX + 1, maxY + 1 );
   croppedPixmap.save( "out.png" );
-  return 0;
+
+  return EXIT_SUCCESS;
 }

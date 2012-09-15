@@ -7,15 +7,15 @@ pkgdesc='Simple program to convert text input to a PNG image'
 url='http://github.com/ducakar/text2png/'
 arch=('i686' 'x86_64')
 license=('Public Domain')
-depends=('qt ')
-source=("")
+depends=('qt')
+source=('text2png.tar.gz')
 sha1sums=('')
 
 build() {
   cd "${srcdir}"
 
   mkdir build && cd build
-  cmake ../${pkgname}-${pkgver} \
+  cmake ../${pkgname} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr
   make
