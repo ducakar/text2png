@@ -21,14 +21,14 @@ const int FONT_SIZE = 14;
 int main(int argc, char** argv)
 {
   QApplication app(argc, argv);
-  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+  QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
   QStringList args = app.arguments();
   args.removeAt(0);
 
-  for (const QString s : args) {
+  for (const QString& s : args) {
     if (s[0] == '-' || s == "-?" || s == "-h" || s == "--help") {
-      std::cout << "Usage: " << app.argv()[0] << std::endl
+      std::cout << "Usage: " << app.arguments()[0].data() << std::endl
                 << "  Input text is read from stdin and written to `out.png'." << std::endl;
 
       return EXIT_FAILURE;
@@ -36,7 +36,7 @@ int main(int argc, char** argv)
   }
 
   QPixmap  pixmap(WIDTH, HEIGHT);
-  QFont    font("LucidaTypewriter");
+  QFont    font("B&H LucidaTypewriter");
   QPoint   point(0, FONT_SIZE);
   QPainter painter(&pixmap);
 

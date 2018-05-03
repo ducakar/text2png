@@ -1,12 +1,12 @@
-cmake_minimum_required( VERSION 2.8 )
-project( text2png )
+cmake_minimum_required(VERSION 3.10)
+project(text2png)
 
-find_package( Qt4 REQUIRED )
-include( ${QT_USE_FILE} )
+set(CMAKE_INCLUDE_CURRENT_DIR)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wconversion")
 
-add_definitions( ${QT_DEFINITIONS} )
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pipe -std=c++11 -Wall -Wextra -Wconversion" )
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 
-add_executable( text2png main.cc )
-target_link_libraries( text2png ${QT_LIBRARIES} )
-install( TARGETS text2png RUNTIME DESTINATION bin )
+add_executable(text2png main.cc)
+qt5_use_modules(text2png Widgets)
+install(TARGETS text2png RUNTIME DESTINATION bin)
